@@ -6,10 +6,10 @@ import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import { MdOutlineGroupAdd } from 'react-icons/md';
 import clsx from "clsx";
-//import { find, uniq } from 'lodash';
+import { find, uniq } from 'lodash';
 
 import useConversation from "@/app/hooks/useConversation";
-//import { pusherClient } from "@/app/libs/pusher";
+import { pusherClient } from "@/app/libs/pusher";
 import GroupChatModal from "@/app/components/modals/GroupChatModal";
 import ConversationBox from "./ConversationBox";
 import { FullConversationType } from "@/app/types";
@@ -32,12 +32,12 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   const { conversationId, isOpen } = useConversation();
 
-  /*const pusherKey = useMemo(() => {
+  const pusherKey = useMemo(() => {
     return session.data?.user?.email
   }, [session.data?.user?.email])
-  */
+  
 
-  /*useEffect(() => {
+  useEffect(() => {
     if (!pusherKey) {
       return;
     }
@@ -71,13 +71,17 @@ const ConversationList: React.FC<ConversationListProps> = ({
       setItems((current) => {
         return [...current.filter((convo) => convo.id !== conversation.id)]
       });
+
+      if(conversationId === conversation.id){
+        router.push('/conversations');
+      }
     }
 
     pusherClient.bind('conversation:update', updateHandler)
     pusherClient.bind('conversation:new', newHandler)
     pusherClient.bind('conversation:remove', removeHandler)
   }, [pusherKey, router]);
-*/
+
   return (
     <>
       <GroupChatModal 

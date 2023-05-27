@@ -3,11 +3,11 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 
-//import { pusherClient } from "@/app/libs/pusher";
+import { pusherClient } from "@/app/libs/pusher";
 import useConversation from "@/app/hooks/useConversation";
 import MessageBox from "./MessageBox";
 import { FullMessageType } from "@/app/types";
-//import { find } from "lodash";
+import { find } from "lodash";
 
 interface BodyProps {
   initialMessages: FullMessageType[];
@@ -23,9 +23,9 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
     axios.post(`/api/conversations/${conversationId}/seen`);
   }, [conversationId]);
 
-  /*
+  
   useEffect(() => {
-    pusherClient.subscribe(conversationId)
+    pusherClient.subscribe(conversationId);
     bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: FullMessageType) => {
@@ -62,7 +62,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
       pusherClient.unbind('message:update', updateMessageHandler)
     }
   }, [conversationId]);
-*/
+
   return ( 
     <div className="flex-1 overflow-y-auto">
       {messages.map((message, i) => (
